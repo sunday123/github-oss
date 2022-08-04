@@ -2,7 +2,10 @@ package com.ij34;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -226,6 +229,7 @@ public class PrimaryController {
     private void upload(UploadDto record) {
         String fileStr = record.getFileStr();
         File file = FileUtil.file(fileStr);
+        compressLargeImg(file);
         String content = Base64.encode(file);
         String fileName = file.getName();
         String suffix = getSuffixByFileName(fileName);
@@ -253,6 +257,19 @@ public class PrimaryController {
         } else {
             uploadTipLabel.setText(DateUtil.now() + "upload file fail:" + fileName + ">" + newName);
         }
+    }
+
+    private File compressLargeImg(File file) {
+        if ((file.length()/1024<=200) || isImg(file)==false){
+            return file;
+        }
+        return null;
+    }
+
+    private static boolean isImg(File file) {
+        List<String> list = ListUtil.of(ImgUtil.IMAGE_TYPE_GIF,ImgUtil.IMAGE_TYPE_JPEG,ImgUtil.IMAGE_TYPE_JPG,ImgUtil.IMAGE_TYPE_PNG);
+        String type =  FileTypeUtil.getType(file);
+        return list.stream().anyMatch(a->a.equalsIgnoreCase(type));
     }
 
     private void delete(UploadDto record) {
