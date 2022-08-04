@@ -94,6 +94,25 @@
                </children>
             </Pane>
          </content></Tab>
+      <Tab text="compress img">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <JFXSlider fx:id="scaleSlider" layoutX="212.0" layoutY="83.0" min="1.0" prefHeight="40.0" prefWidth="300.0" value="100.0" />
+                  <JFXSlider fx:id="qualitySlider" layoutX="571.0" layoutY="83.0" min="1.0" prefHeight="40.0" prefWidth="300.0" value="100.0" />
+                  <Label layoutX="339.0" layoutY="46.0" text="scale" textFill="#d36262" />
+                  <Label layoutX="698.0" layoutY="46.0" text="quality" textFill="#d36262" />
+                  <JFXButton layoutX="453.0" layoutY="148.0" onAction="#compressAction" prefHeight="65.0" prefWidth="173.0" text="compress img" textFill="#818618">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <Label fx:id="compressLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="197.0" layoutY="224.0" prefHeight="42.0" prefWidth="699.0" textAlignment="CENTER" />
+                  <Button layoutX="498.0" layoutY="315.0" mnemonicParsing="false" onAction="#compressCopyAction" text="copy path" textFill="#6e32bc" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
       <Tab text="about">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

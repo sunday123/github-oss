@@ -20,7 +20,6 @@ public class Main extends Application {
         stage.setTitle("github oss");
         stage.setScene(scene);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
-
         stage.show();
     }
 

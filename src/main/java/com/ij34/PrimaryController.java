@@ -16,15 +16,18 @@ import com.ij34.model.GitUser;
 import com.ij34.model.UploadDto;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import net.coobird.thumbnailator.Thumbnails;
 
 import java.io.File;
 import java.io.IOException;
@@ -229,7 +232,6 @@ public class PrimaryController {
     private void upload(UploadDto record) {
         String fileStr = record.getFileStr();
         File file = FileUtil.file(fileStr);
-        compressLargeImg(file);
         String content = Base64.encode(file);
         String fileName = file.getName();
         String suffix = getSuffixByFileName(fileName);
@@ -259,18 +261,7 @@ public class PrimaryController {
         }
     }
 
-    private File compressLargeImg(File file) {
-        if ((file.length()/1024<=200) || isImg(file)==false){
-            return file;
-        }
-        return null;
-    }
 
-    private static boolean isImg(File file) {
-        List<String> list = ListUtil.of(ImgUtil.IMAGE_TYPE_GIF,ImgUtil.IMAGE_TYPE_JPEG,ImgUtil.IMAGE_TYPE_JPG,ImgUtil.IMAGE_TYPE_PNG);
-        String type =  FileTypeUtil.getType(file);
-        return list.stream().anyMatch(a->a.equalsIgnoreCase(type));
-    }
 
     private void delete(UploadDto record) {
         String url = record.getUrl();
@@ -308,4 +299,64 @@ public class PrimaryController {
         return StrUtil.sub(fileName, index, fileName.length());
     }
 
+
+    //compress
+
+    @FXML
+    Label compressLabel;
+    @FXML
+    JFXSlider scaleSlider,qualitySlider;
+
+    @FXML
+    private void compressCopyAction(ActionEvent event)  {
+        if (StrUtil.isBlank(compressLabel.getText()) || compressLabel.getText().startsWith("success:")==false){
+            return;
+        }
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent clipboardContent = new ClipboardContent();
+        clipboardContent.put(DataFormat.PLAIN_TEXT, compressLabel.getText().substring(8,compressLabel.getText().length()));
+        clipboard.setContent(clipboardContent);
+
+    }
+
+
+
+    @FXML
+    private void compressAction(ActionEvent event)  {
+        String prePath = preferences.get("github-oss-user-prePath-key", null);
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("select file compress");
+        if (StrUtil.isNotBlank(prePath)) {
+            fileChooser.setInitialDirectory(FileUtil.file(prePath));
+        }
+
+        Stage stage = (Stage) urlLabel.getParent().getParent().getParent().getScene().getWindow();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file == null) {
+            return;
+        }
+        if (isImg(file)==false){
+            compressLabel.setText("not jpg jpeg png");
+            return;
+        }
+        preferences.put("github-oss-user-prePath-key", file.getParent());
+        double scale = scaleSlider.getValue()/100.00;
+        double quality=qualitySlider.getValue()/100.00;
+        try {
+            String dest=file.getAbsolutePath()+DateUtil.format(DateUtil.date(),"yyMMddHHmmss")+"."+FileTypeUtil.getType(file);
+            Thumbnails.of(file).scale(scale).outputQuality(quality).toFile(dest);
+            compressLabel.setText("success:"+dest);
+        } catch (IOException e) {
+            compressLabel.setText("program error");
+            e.printStackTrace();
+        }
+
+    }
+
+    private boolean isImg(File file) {
+        List<String> list = ListUtil.of(ImgUtil.IMAGE_TYPE_JPEG,ImgUtil.IMAGE_TYPE_JPG,ImgUtil.IMAGE_TYPE_PNG);
+        String type =  FileTypeUtil.getType(file);
+        return list.stream().anyMatch(a->a.equalsIgnoreCase(type));
+    }
 }
