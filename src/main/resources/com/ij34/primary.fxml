@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.*?>
+
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ij34.PrimaryController">
+  <tabs>
+    <Tab text="upload">
+         <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <JFXButton layoutX="304.0" layoutY="45.0" mnemonicParsing="false" onAction="#uploadAction" prefHeight="39.0" prefWidth="288.0" text="upload select file" textFill="#c67c7c">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </JFXButton>
+                  <Label fx:id="uploadTipLabel" layoutX="130.0" layoutY="237.0" prefHeight="57.0" prefWidth="862.0" />
+                  <JFXButton layoutX="304.0" layoutY="142.0" mnemonicParsing="false" onAction="#copyAction" prefHeight="36.0" prefWidth="216.0" text="copy url" textFill="#c36161" />
+                  <Label fx:id="urlLabel" layoutX="545.0" layoutY="142.0" prefHeight="36.0" prefWidth="487.0" />
+                  <JFXButton layoutX="291.0" layoutY="422.0" mnemonicParsing="false" onAction="#deleteAction" prefHeight="39.0" prefWidth="288.0" text="delete" textFill="#c67c7c">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton layoutX="600.0" layoutY="45.0" mnemonicParsing="false" onAction="#uploadClipboardAction" prefHeight="39.0" prefWidth="288.0" text="upload clipboard" textFill="#c67c7c">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </Pane>
+         </content></Tab>
+    <Tab text="setting">
+         <content>
+            <Pane minHeight="50.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="94.0" layoutY="81.0" prefHeight="40.0" prefWidth="150.0" text="owner" textFill="#a83d3d">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="94.0" layoutY="140.0" prefHeight="40.0" prefWidth="150.0" text="repo" textFill="#e14444">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="94.0" layoutY="198.0" prefHeight="40.0" prefWidth="150.0" text="path" textFill="#e42525">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="94.0" layoutY="327.0" prefHeight="40.0" prefWidth="150.0" text="token" textFill="#e87e7e">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="94.0" layoutY="385.0" prefHeight="40.0" prefWidth="150.0" text="domain" textFill="#ee6868">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="94.0" layoutY="262.0" prefHeight="40.0" prefWidth="150.0" text="branch" textFill="#c64242">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <JFXTextField fx:id="ownerTextField" layoutX="253.0" layoutY="79.0" prefHeight="45.0" prefWidth="600.0" promptText="The account owner of the repository.sunday123" />
+                  <JFXTextField fx:id="domainTextField" layoutX="253.0" layoutY="383.0" prefHeight="45.0" prefWidth="600.0" promptText="http://file.ij34.com" />
+                  <JFXTextField fx:id="branchTextField" layoutX="253.0" layoutY="260.0" prefHeight="45.0" prefWidth="600.0" promptText="The branch name.master" />
+                  <JFXTextField fx:id="pathTextField" layoutX="253.0" layoutY="196.0" prefHeight="45.0" prefWidth="600.0" promptText="path parameter./images" />
+                  <JFXTextField fx:id="repoTextField" layoutX="253.0" layoutY="138.0" prefHeight="45.0" prefWidth="600.0" promptText="The name of the repository. files" />
+                  <JFXButton layoutX="354.0" layoutY="452.0" mnemonicParsing="false" onAction="#saveAction" prefHeight="11.0" prefWidth="150.0" text="save" textFill="#d04545">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXPasswordField fx:id="tokenPasswordField" layoutX="253.0" layoutY="327.0" prefHeight="45.0" prefWidth="600.0" promptText="Authorization" />
+                  <Label fx:id="tipLabel" layoutX="533.0" layoutY="464.0" prefHeight="50.0" prefWidth="440.0" textFill="#65575759">
+                     <font>
+                        <Font size="26.0" />
+                     </font></Label>
+                  <JFXCheckBox fx:id="reFileNameBox" layoutX="86.0" layoutY="460.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="217.0" text="rename file" textFill="#b93a3a">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </JFXCheckBox>
+               </children>
+            </Pane>
+         </content></Tab>
+      <Tab text="about">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="233.0" layoutY="194.0" prefHeight="76.0" prefWidth="387.0" text="https://www.ij34.com" textFill="#acd75c">
+                     <font>
+                        <Font name="System Italic" size="31.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="240.0" layoutY="270.0" prefHeight="76.0" prefWidth="408.0" text="https://github.com/sunday123" textFill="#acd75c">
+                     <font>
+                        <Font name="System Italic" size="31.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+  </tabs>
+</JFXTabPane>
