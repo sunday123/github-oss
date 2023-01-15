@@ -7,11 +7,13 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.system.SystemUtil;
 import com.ij34.model.GitUser;
 import com.ij34.model.UploadDto;
 import com.jfoenix.controls.JFXCheckBox;
@@ -29,6 +31,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.coobird.thumbnailator.Thumbnails;
 
+import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -172,11 +175,11 @@ public class PrimaryController {
 
     @FXML
     private void uploadAction(ActionEvent event) {
-        String prePath = preferences.get("github-oss-user-prePath-key", null);
+        String prePath = preferences.get("github-oss-user-prePath-key",null);
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("select file");
-        if (StrUtil.isNotBlank(prePath)) {
+        if (StrUtil.isNotBlank(prePath) && FileUtil.file(prePath).isDirectory()) {
             fileChooser.setInitialDirectory(FileUtil.file(prePath));
         }
 
@@ -257,7 +260,7 @@ public class PrimaryController {
             uploadTipLabel.setText(DateUtil.now() + "upload file success:" + fileName + ">" + newName);
             uploadDto = record;
         } else {
-            uploadTipLabel.setText(DateUtil.now() + "upload file fail:" + fileName + ">" + newName);
+            uploadTipLabel.setText(DateUtil.now() + "upload file fail:" + fileName + ">" + newName +"==>"+JSONUtil.toJsonStr(root));
         }
     }
 
