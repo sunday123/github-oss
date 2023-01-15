@@ -35,3 +35,21 @@ The reason for this project, fuck PicGo.
 
 
 ![](http://file.ij34.com/images/repo/github-oss/20220804221956.png)
+
+
+
+
+
+
+
+
+-----
+
+download: https://github.com/sunday123/github-oss/releases
+
+
+Requires a higher version of jdk
+
+Windows run -click file:startup.cmd
+
+Linux and mac run - chmod +x startup.sh  && ./startup.sh 
